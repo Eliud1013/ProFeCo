@@ -1,14 +1,26 @@
 const express = require("express");
 const router = express.Router();
-const clientesAuthServices = require("../../services/auth/clientes.auth.services");
+const mercadosAuthServices = require("../../services/auth/mercados.auth.services");
 const jwt = require("../../utils/jwt");
 
+/* 
+
+CREATE TABLE Mercados(
+    mercadoId VARCHAR(52) PRIMARY KEY NOT NULL,
+    mercado VARCHAR(52) NOT NULL,
+    adminUser VARCHAR(52) NOT NULL,
+    password VARCHAR(52) NOT NULL,
+    email VARCHAR(52) NOT NULL UNIQUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+
+);
+*/
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     res.status(400).json({ logged: false, message: "Faltan campos" });
   } else {
-    const logged = await clientesAuthServices.login(email, password);
+    const logged = await mercadosAuthServices.login(email, password);
     if (logged) {
       const token = jwt.generateToken(logged);
       res.status(200).cookie("auth", token, { httpOnly: true }).json({
@@ -25,16 +37,15 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-  const { name, username, password, email, genre } = req.body;
-  if (!name || !username || !password || !email || !genre) {
+  const { mercado, username, password, email } = req.body;
+  if (!mercado || !username || !password || !email) {
     res.status(400).json({ logged: false, message: "Faltan campos" });
   } else {
-    const registered = await clientesAuthServices.register(
-      name,
+    const registered = await mercadosAuthServices.register(
+      mercado,
       username,
       password,
-      email,
-      genre
+      email
     );
 
     if (registered.registered) {
