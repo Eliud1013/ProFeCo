@@ -22,6 +22,12 @@ server.addService(ProfecoServices.ProfecoServices.service, {
 
     callback(null, ofertas);
   },
+  ofertaExiste: async (_, callback) => {
+    const ofertaId = _.request.id;
+    const existe = await db.ofertaExiste(ofertaId);
+    const count = existe.length;
+    callback(null, { count });
+  },
 });
 
 function startGrpcServer() {

@@ -48,9 +48,16 @@ CREATE TABLE Ofertas(
     mercadoId VARCHAR(52) NOT NULL,
     productoId VARCHAR(52),
     precioOferta INT NOT NULL,
-    FOREIGN KEY (mercadoId ) REFERENCES Mercados(mercadoId),
+    FOREIGN KEY (mercadoId) REFERENCES Mercados(mercadoId),
     FOREIGN KEY (productoId) REFERENCES Productos(productoId)
 );
+
+CREATE TABLE Inconsistencias(
+    inconsistenciaId VARCHAR(52) PRIMARY KEY NOT NULL UNIQUE,
+    ofertaId VARCHAR(52) NOT NULL,
+    mensaje TEXT NOT NULL,
+    FOREIGN KEY(ofertaId) REFERENCES Ofertas(ofertaId)
+)
 
 INSERT INTO Clientes(clienteId,name,username,email,password,genre) VALUES('1','Eliud','eliud101','eliud@mail.com','12345','H');
 INSERT INTO Mercados(mercadoId,mercado ,adminUser,password,email)VALUES('1','ley','juan','12345','juan@ley.com');

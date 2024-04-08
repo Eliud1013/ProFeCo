@@ -97,10 +97,26 @@ async function offerExists(productoId, mercadoId) {
   }
 }
 
+async function marktetExists(mercadoId) {
+  try {
+    let conn = await getConnection();
+    const res = await conn.query(
+      "SELECT COUNT(*) FROM Mercados WHERE mercadoId = ?",
+      [mercadoId]
+    );
+    return res;
+  } catch (error) {
+    return error;
+  } finally {
+    if (conn) conn.release();
+  }
+}
+
 module.exports = {
   register,
   login,
   checkProductExists,
   publicarOferta,
   offerExists,
+  marktetExists,
 };

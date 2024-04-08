@@ -12,7 +12,16 @@ message Ofertas {
     repeated Oferta ofertas = 1;
 }
 
+message OfertaId {
+    string id = 1;
+}
+message Count {
+    int32 count = 1;
+}
+
 service ProfecoServices {
     rpc obtenerOfertas(Empty) returns (Ofertas){}
+    rpc ofertaExiste(OfertaId) returns (Count){}
+    
 
 }

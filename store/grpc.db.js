@@ -44,5 +44,19 @@ async function obtenerOfertas() {
     if (conn) conn.release();
   }
 }
+async function ofertaExiste(ofertaId) {
+  try {
+    let conn = await getConnection();
+    const res = await conn.query("SELECT * FROM Ofertas WHERE ofertaId = ?", [
+      ofertaId,
+    ]);
 
-module.exports = { obtenerOfertas };
+    return res;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    if (conn) conn.release();
+  }
+}
+
+module.exports = { obtenerOfertas, ofertaExiste };

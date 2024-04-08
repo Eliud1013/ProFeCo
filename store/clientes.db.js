@@ -7,6 +7,7 @@ const pool = mariadb.createPool({
   database: process.env.DB,
   connectionLimit: 5,
 });
+let conn;
 
 async function getConnection() {
   return new Promise((resolve, reject) => {
@@ -51,5 +52,25 @@ async function register(clienteId, name, username, password, email, genre) {
     if (conn) conn.release(); //release to pool
   }
 }
+async function reportarInconsistencia(
+  inconsistenciaId,
+  ofertaId,
+  clienteId,
+  mensaje
+) {
+  try {
+    let conn = await getConnection();
+    const res = await conn.query(
+      "INSERT INTO Inconsistencias (inconsistenciaId,ofertaId,clienteId,mensaje) VALUES (?,?,?,?)",
+      [inconsistenciaId, ofertaId, clienteId, mensaje]
+    );
 
-module.exports = { register, login };
+    return res;
+  } catch (error) {
+    return error;
+  } finally {
+    if (conn) conn.release();
+  }
+}
+
+module.exports = { register, login, reportarInconsistencia };
