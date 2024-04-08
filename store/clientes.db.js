@@ -32,7 +32,7 @@ async function login(email, password) {
   } catch (error) {
     console.log(error);
   } finally {
-    if (conn) conn.release(); //release to pool
+    if (conn) conn.release();
   }
 }
 

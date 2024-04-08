@@ -54,5 +54,33 @@ async function register(mercadoId, mercado, username, password, email) {
     if (conn) conn.release();
   }
 }
+async function checkProductExists(productId) {
+  try {
+    let conn = await getConnection();
+    const res = await conn.query(
+      "SELECT COUNT(*) FROM Productos WHERE ProductoId = ?",
+      [productId]
+    );
+    return res;
+  } catch (error) {
+    return error;
+  } finally {
+    if (conn) conn.release();
+  }
+}
+async function publicarOferta(ofertaId, productId, mercadoId, precioOferta) {
+  try {
+    let conn = await getConnection();
+    const res = await conn.query(
+      "INSERT INTO Ofertas(ofertaId,mercadoId,productoId,precioOferta) VALUES (?,?,?,?)",
+      [ofertaId, productId, mercadoId, precioOferta]
+    );
+    return res;
+  } catch (error) {
+    return error;
+  } finally {
+    if (conn) conn.release();
+  }
+}
 
-module.exports = { register, login };
+module.exports = { register, login, checkProductExists, publicarOferta };

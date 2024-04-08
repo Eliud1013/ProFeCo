@@ -2,6 +2,7 @@ require("dotenv").config();
 var jwt = require("jsonwebtoken");
 
 function generateToken(userData) {
+  userData = userData[0];
   let data = { email: userData.email };
   if ("clienteId" in userData) {
     data = { ...data, clienteId: userData.clienteId, roll: "cliente" };
