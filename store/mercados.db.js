@@ -82,5 +82,25 @@ async function publicarOferta(ofertaId, productId, mercadoId, precioOferta) {
     if (conn) conn.release();
   }
 }
+async function offerExists(productoId, mercadoId) {
+  try {
+    let conn = await getConnection();
+    const res = await conn.query(
+      "SELECT COUNT(*) FROM Ofertas WHERE productoId = ? AND mercadoId = ?",
+      [productoId, mercadoId]
+    );
+    return res;
+  } catch (error) {
+    return error;
+  } finally {
+    if (conn) conn.release();
+  }
+}
 
-module.exports = { register, login, checkProductExists, publicarOferta };
+module.exports = {
+  register,
+  login,
+  checkProductExists,
+  publicarOferta,
+  offerExists,
+};

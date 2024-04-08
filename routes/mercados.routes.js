@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const checkAuth = require("../middlewares/checkAuth");
 const productExists = require("../middlewares/productExists");
+const offerExists = require("../middlewares/offerExists");
 const mercadosServices = require("../services/mercados.services");
 
 router.get("/ratings", (req, res) => {
@@ -17,10 +18,12 @@ router.post("/subirPrecio/:idProducto", (req, res) => {
   res.send("calificar");
 });
 
+//Publicar Oferta
 router.post(
   "/ofertas/:productId",
   checkAuth,
   productExists,
+  offerExists,
   async (req, res) => {
     const productId = req.params.productId;
     const { precioOferta } = req.body || null;

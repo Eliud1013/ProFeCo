@@ -39,7 +39,8 @@ CREATE TABLE Productos (
     productoId VARCHAR(52) PRIMARY KEY NOT NULL UNIQUE,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
-    precio DECIMAL(10, 2) NOT NULL
+    precio DECIMAL(10, 2) NOT NULL,
+    imagenUrl TEXT
 );
 
 CREATE TABLE Ofertas(
