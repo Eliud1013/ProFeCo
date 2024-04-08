@@ -1,0 +1,18 @@
+syntax = "proto3";
+ 
+message Empty {}
+
+message Oferta {
+    string ofertaId = 1;
+    string mercadoId = 2;
+    string productoId = 3;
+    float precioOferta = 4;
+}
+message Ofertas {
+    repeated Oferta ofertas = 1;
+}
+
+service ProfecoServices {
+    rpc obtenerOfertas(Empty) returns (Ofertas){}
+
+}
