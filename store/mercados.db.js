@@ -111,6 +111,20 @@ async function marktetExists(mercadoId) {
     if (conn) conn.release();
   }
 }
+async function obtenerRatings(mercadoId) {
+  try {
+    let conn = await getConnection();
+    const res = await conn.query(
+      "SELECT * FROM Calificaciones WHERE mercadoId = ?",
+      [mercadoId]
+    );
+    return res;
+  } catch (error) {
+    return error;
+  } finally {
+    if (conn) conn.release();
+  }
+}
 
 module.exports = {
   register,
@@ -119,4 +133,5 @@ module.exports = {
   publicarOferta,
   offerExists,
   marktetExists,
+  obtenerRatings,
 };

@@ -20,5 +20,9 @@ async function publicarOferta(productId, mercadoId, precioOferta) {
     }
   }
 }
+async function obtenerRatings(mercadoId) {
+  const ratings = await mercadoDB.obtenerRatings(mercadoId);
+  return ratings;
+}
 
-module.exports = { publicarOferta };
+module.exports = { publicarOferta, obtenerRatings };

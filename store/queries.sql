@@ -70,8 +70,17 @@ CREATE TABLE Calificaciones(
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP
 )
 
+CREATE TABLE Multas(
+    multaId VARCHAR(52) PRIMARY KEY NOT NULL UNIQUE,
+    tiendaId VARCHAR(52) NOT NULL,
+    multa INT NOT NULL,
+    mensaje TEXT DEFAULT "Sin mensaje",
+    fecha_multa DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+
 INSERT INTO Clientes(clienteId,name,username,email,password,genre) VALUES('1','Eliud','eliud101','eliud@mail.com','12345','H');
 INSERT INTO Mercados(mercadoId,mercado ,adminUser,password,email)VALUES('1','ley','juan','12345','juan@ley.com');
+INSERT INTO ProfecoUsuario(profecoUserId,username,password,email)VALUES('1','Admin','12345','admin@profeco.com');
 INSERT INTO Productos (productoId, nombre, descripcion, precio) VALUES
 ('PROD001', 'Laptop HP', 'Laptop HP de última generación con procesador Intel Core i7 y 16GB de RAM.', 1200.00),
 ('PROD002', 'Smartphone Samsung', 'Smartphone Samsung Galaxy con pantalla AMOLED y cámara de 64MP.', 800.00),

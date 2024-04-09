@@ -6,10 +6,6 @@ const productExists = require("../middlewares/productExists");
 const offerExists = require("../middlewares/offerExists");
 const mercadosServices = require("../services/mercados.services");
 
-router.get("/ratings", (req, res) => {
-  res.send("Ratings");
-});
-
 router.get("/multas", (req, res) => {
   res.send("Multas");
 });
@@ -48,5 +44,14 @@ router.post(
     }
   }
 );
+
+router.get("/ratings", checkAuth, async (req, res) => {
+  let token = req.headers.cookie.split("=")[1];
+  let data = jwt.verify(token, process.env.SECRET);
+  const mercadoId = data.mercadoId;
+  const ratings = await mercadosServices.obtenerRatings(mercadoId);
+
+  res.json(ratings);
+});
 
 module.exports = router;
