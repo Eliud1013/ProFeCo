@@ -55,8 +55,19 @@ CREATE TABLE Ofertas(
 CREATE TABLE Inconsistencias(
     inconsistenciaId VARCHAR(52) PRIMARY KEY NOT NULL UNIQUE,
     ofertaId VARCHAR(52) NOT NULL,
+    clienteId VARCHAR(52) NOT NULL,
     mensaje TEXT NOT NULL,
-    FOREIGN KEY(ofertaId) REFERENCES Ofertas(ofertaId)
+    FOREIGN KEY(ofertaId) REFERENCES Ofertas(ofertaId),
+    FOREIGN KEY(clienteId) REFERENCES Clientes(clienteId)
+)
+
+CREATE TABLE Calificaciones(
+    calificacionId VARCHAR(52) PRIMARY KEY NOT NULL UNIQUE,
+    clienteId VARCHAR(52) NOT NULL,
+    mercadoId VARCHAR(52) NOT NULL,
+    calificacion FLOAT(2,1) NOT NULL,
+    comentario TEXT NOT NULL,
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP
 )
 
 INSERT INTO Clientes(clienteId,name,username,email,password,genre) VALUES('1','Eliud','eliud101','eliud@mail.com','12345','H');

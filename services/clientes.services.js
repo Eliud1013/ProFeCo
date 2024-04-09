@@ -70,5 +70,31 @@ async function reportarInconsistencia(ofertaId, clienteId, mensaje) {
     return { reported: true, message: "El reporte ha sido enviado" };
   }
 }
+async function calificarMercado(
+  clienteId,
+  mercadoId,
+  calificacion,
+  comentario
+) {
+  const calificacionId = uuidv4();
+  const calificado = await clientesDB.calificarMercado(
+    calificacionId,
+    clienteId,
+    mercadoId,
+    calificacion,
+    comentario
+  );
+  if (calificado.affectedRows > 0) {
+    return { calificado: true, status: 201 };
+  } else {
+    return { calificado: false, status: 500 };
+  }
+}
 
-module.exports = { obtenerOfertas, reportarInconsistencia, ofertaExiste };
+//calificarMercado
+module.exports = {
+  obtenerOfertas,
+  reportarInconsistencia,
+  ofertaExiste,
+  calificarMercado,
+};

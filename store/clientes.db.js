@@ -72,5 +72,33 @@ async function reportarInconsistencia(
     if (conn) conn.release();
   }
 }
+async function calificarMercado(
+  calificacionId,
+  clienteId,
+  mercadoId,
+  calificacion,
+  comentario
+) {
+  try {
+    let conn = await getConnection();
+    const res = await conn.query(
+      "INSERT INTO Calificaciones (calificacionId,clienteId,mercadoId,calificacion, comentario) VALUES (?,?,?,?,?)",
+      [calificacionId, clienteId, mercadoId, calificacion, comentario]
+    );
 
-module.exports = { register, login, reportarInconsistencia };
+    return res;
+  } catch (error) {
+    return error;
+  } finally {
+    if (conn) conn.release();
+  }
+}
+/*CREATE TABLE Calificaciones(
+  calificacionId VARCHAR(52) PRIMARY KEY NOT NULL UNIQUE,
+  clienteId VARCHAR(52) NOT NULL,
+  mercadoId VARCHAR(52) NOT NULL,
+  calificacion FLOAT(1,1) NOT NULL,
+  comentario TEXT NOT NULL,
+  fecha DATETIME DEFAULT CURRENT_TIMESTAMP
+)*/
+module.exports = { register, login, reportarInconsistencia, calificarMercado };
