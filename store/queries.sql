@@ -92,4 +92,14 @@ INSERT INTO Productos (productoId, nombre, descripcion, precio) VALUES
 ('PROD008', 'Monitor LG', 'Monitor LG UltraWide de 34 pulgadas con resolución QHD y tecnología FreeSync.', 700.00),
 ('PROD009', 'Teclado Logitech', 'Teclado Logitech G Pro con switches mecánicos y retroiluminación RGB.', 150.00),
 ('PROD010', 'Mouse Razer', 'Mouse Razer DeathAdder Elite con sensor óptico 16000 DPI y 7 botones programables.', 80.00);
+INSERT INTO Ofertas(ofertaId,mercadoId,productoId,precioOferta)VALUES('OFFER_001')
 
+
+CREATE TABLE Ofertas(
+    ofertaId VARCHAR(52) PRIMARY KEY NOT NULL UNIQUE,
+    mercadoId VARCHAR(52) NOT NULL,
+    productoId VARCHAR(52),
+    precioOferta INT NOT NULL,
+    FOREIGN KEY (mercadoId) REFERENCES Mercados(mercadoId),
+    FOREIGN KEY (productoId) REFERENCES Productos(productoId)
+);

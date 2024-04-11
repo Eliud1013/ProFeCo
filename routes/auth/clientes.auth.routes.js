@@ -25,16 +25,19 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-  const { name, username, password, email, genre } = req.body;
-  if (!name || !username || !password || !email || !genre) {
+  const { name, username, password, email, gender } = req.body;
+  if (!name || !username || !password || !email || !gender) {
     res.status(400).json({ logged: false, message: "Faltan campos" });
+  } else if (gender != "H" && gender != "M") {
+    console.log(gender);
+    res.status(400).send("El genero puede ser H o M.");
   } else {
     const registered = await clientesAuthServices.register(
       name,
       username,
       password,
       email,
-      genre
+      gender
     );
 
     if (registered.registered) {

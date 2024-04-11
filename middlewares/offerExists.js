@@ -7,7 +7,7 @@ module.exports = async function (req, res, next) {
   const productId = req.params.productId;
   const mercadoId = data.mercadoId;
   const exists = await offerExists(productId, mercadoId);
-  const count = Object.values(exists[0])[0];
+  const count = Object.values(exists[0] || {})[0] || 99;
 
   if (count > 1n) {
     res

@@ -50,6 +50,8 @@ router.post(
     let clienteId = jwt.verify(token, process.env.SECRET).clienteId;
     if (!calificacion || !comentario) {
       res.status(400).send("Faltan campos");
+    } else if (calificacion > 5) {
+      res.status(400).send("La calificacion debe estar en el rango 0-5");
     } else {
       const calificado = await clientesServices.calificarMercado(
         clienteId,

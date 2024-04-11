@@ -12,8 +12,10 @@ async function login(email, password) {
 }
 
 async function register(name, username, password, email, genre) {
+  const id = uuidv4().split("-")[0];
+  const clienteId = `CLIENTE_${id}`;
   const registered = await clientesDB.register(
-    uuidv4(),
+    clienteId,
     name,
     username,
     password,

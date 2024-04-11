@@ -33,7 +33,7 @@ async function login(email, password) {
     );
     return res;
   } catch (error) {
-    console.log(error);
+    console.log("[X] Mercados_db: " + error);
   } finally {
     if (conn) conn.release();
   }

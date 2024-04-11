@@ -2,7 +2,8 @@ const { v4: uuidv4 } = require("uuid");
 const mercadoDB = require("../store/mercados.db");
 
 async function publicarOferta(productId, mercadoId, precioOferta) {
-  const ofertaId = uuidv4();
+  const id = uuidv4().split("-")[0];
+  const ofertaId = `OFFER_${id}`;
   if (typeof precioOferta != "number") {
     return { published: false, message: "Precio invalido" };
   } else {

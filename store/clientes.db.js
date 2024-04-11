@@ -93,12 +93,5 @@ async function calificarMercado(
     if (conn) conn.release();
   }
 }
-/*CREATE TABLE Calificaciones(
-  calificacionId VARCHAR(52) PRIMARY KEY NOT NULL UNIQUE,
-  clienteId VARCHAR(52) NOT NULL,
-  mercadoId VARCHAR(52) NOT NULL,
-  calificacion FLOAT(1,1) NOT NULL,
-  comentario TEXT NOT NULL,
-  fecha DATETIME DEFAULT CURRENT_TIMESTAMP
-)*/
+
 module.exports = { register, login, reportarInconsistencia, calificarMercado };
