@@ -23,8 +23,10 @@ async function getConnection() {
   });
 }
 async function login(email, password) {
+  let conn;
+
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     const res = await conn.query(
       "SELECT * FROM Clientes WHERE email = ? AND password = ? ",
       [email, password]
@@ -38,8 +40,9 @@ async function login(email, password) {
 }
 
 async function register(clienteId, name, username, password, email, genre) {
+  let conn;
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     const res = await conn.query(
       "INSERT INTO Clientes (clienteId, name, username, password, email, genre) VALUES (?,?,?,?,?,?)",
       [clienteId, name, username, password, email, genre]
@@ -58,8 +61,9 @@ async function reportarInconsistencia(
   clienteId,
   mensaje
 ) {
+  let conn;
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     const res = await conn.query(
       "INSERT INTO Inconsistencias (inconsistenciaId,ofertaId,clienteId,mensaje) VALUES (?,?,?,?)",
       [inconsistenciaId, ofertaId, clienteId, mensaje]
@@ -79,8 +83,9 @@ async function calificarMercado(
   calificacion,
   comentario
 ) {
+  let conn;
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     const res = await conn.query(
       "INSERT INTO Calificaciones (calificacionId,clienteId,mercadoId,calificacion, comentario) VALUES (?,?,?,?,?)",
       [calificacionId, clienteId, mercadoId, calificacion, comentario]

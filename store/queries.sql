@@ -96,9 +96,9 @@ INSERT INTO Ofertas(ofertaId,mercadoId,productoId,precioOferta)VALUES('OFFER_001
 
 
 CREATE TABLE Ofertas(
-    ofertaId VARCHAR(52) PRIMARY KEY NOT NULL UNIQUE,
+    ofertaId VARCHAR(52) PRIMARY KEY NOT NULL,
     mercadoId VARCHAR(52) NOT NULL,
-    productoId VARCHAR(52),
+    productoId VARCHAR(52) NOT NULL,
     precioOferta INT NOT NULL,
     FOREIGN KEY (mercadoId) REFERENCES Mercados(mercadoId),
     FOREIGN KEY (productoId) REFERENCES Productos(productoId)

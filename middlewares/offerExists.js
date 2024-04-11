@@ -7,9 +7,10 @@ module.exports = async function (req, res, next) {
   const productId = req.params.productId;
   const mercadoId = data.mercadoId;
   const exists = await offerExists(productId, mercadoId);
-  const count = Object.values(exists[0] || {})[0] || 99;
-
-  if (count > 1n) {
+  console.log(exists);
+  const count = Object.values(exists[0] || {})[0];
+  console.log(count);
+  if (count >= 1n) {
     res
       .status(400)
       .send("Tu tienda ya cuenta con una oferta para ese producto");

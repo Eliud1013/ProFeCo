@@ -2,19 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mercadosAuthServices = require("../../services/auth/mercados.auth.services");
 const jwt = require("../../utils/jwt");
-
-/* 
-
-CREATE TABLE Mercados(
-    mercadoId VARCHAR(52) PRIMARY KEY NOT NULL,
-    mercado VARCHAR(52) NOT NULL,
-    adminUser VARCHAR(52) NOT NULL,
-    password VARCHAR(52) NOT NULL,
-    email VARCHAR(52) NOT NULL UNIQUE,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-
-);
-*/
+const checkMercadosAuth = require("../../middlewares/checkMarketAuth");
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;

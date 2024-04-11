@@ -14,6 +14,7 @@ async function login(email, password) {
     }
   } catch (error) {
     console.log("[X] Mercados_auth_services: " + error);
+
     return { status: 500, errorMsj: "Error en el servidor" };
   }
 }

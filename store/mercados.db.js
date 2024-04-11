@@ -8,7 +8,6 @@ const pool = mariadb.createPool({
   database: process.env.DB,
   connectionLimit: 5,
 });
-let conn;
 
 async function getConnection() {
   return new Promise((resolve, reject) => {
@@ -25,8 +24,9 @@ async function getConnection() {
 }
 
 async function login(email, password) {
+  let conn;
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     const res = await conn.query(
       "SELECT * FROM Mercados WHERE email = ? AND password = ? ",
       [email, password]
@@ -35,13 +35,17 @@ async function login(email, password) {
   } catch (error) {
     console.log("[X] Mercados_db: " + error);
   } finally {
-    if (conn) conn.release();
+    if (conn) {
+      console.log("IF");
+      conn.release();
+    }
   }
 }
 
 async function register(mercadoId, mercado, username, password, email) {
+  let conn;
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     const res = await conn.query(
       "INSERT INTO Mercados (mercadoId, mercado, adminUser, password, email) VALUES (?,?,?,?,?)",
       [mercadoId, mercado, username, password, email]
@@ -55,10 +59,11 @@ async function register(mercadoId, mercado, username, password, email) {
   }
 }
 async function checkProductExists(productId) {
+  let conn;
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     const res = await conn.query(
-      "SELECT COUNT(*) FROM Productos WHERE ProductoId = ?",
+      "SELECT COUNT(*) FROM Productos WHERE productoId = ?",
       [productId]
     );
     return res;
@@ -69,8 +74,9 @@ async function checkProductExists(productId) {
   }
 }
 async function publicarOferta(ofertaId, productId, mercadoId, precioOferta) {
+  let conn;
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     const res = await conn.query(
       "INSERT INTO Ofertas(ofertaId,mercadoId,productoId,precioOferta) VALUES (?,?,?,?)",
       [ofertaId, productId, mercadoId, precioOferta]
@@ -83,8 +89,9 @@ async function publicarOferta(ofertaId, productId, mercadoId, precioOferta) {
   }
 }
 async function offerExists(productoId, mercadoId) {
+  let conn;
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     const res = await conn.query(
       "SELECT COUNT(*) FROM Ofertas WHERE productoId = ? AND mercadoId = ?",
       [productoId, mercadoId]
@@ -98,8 +105,9 @@ async function offerExists(productoId, mercadoId) {
 }
 
 async function marktetExists(mercadoId) {
+  let conn;
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     const res = await conn.query(
       "SELECT COUNT(*) FROM Mercados WHERE mercadoId = ?",
       [mercadoId]
@@ -112,8 +120,9 @@ async function marktetExists(mercadoId) {
   }
 }
 async function obtenerRatings(mercadoId) {
+  let conn;
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     const res = await conn.query(
       "SELECT * FROM Calificaciones WHERE mercadoId = ?",
       [mercadoId]

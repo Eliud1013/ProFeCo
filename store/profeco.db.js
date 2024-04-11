@@ -31,8 +31,9 @@ async function getConnection() {
     fecha_multa DATETIME DEFAULT CURRENT_TIMESTAMP
 ) */
 async function multar(multaId, tiendaId, multa, mensaje) {
+  let conn;
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     let res;
     if (mensaje != null) {
       res = await conn.query(

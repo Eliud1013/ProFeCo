@@ -25,8 +25,9 @@ async function getConnection() {
 }
 
 async function obtenerOfertas() {
+  let conn;
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     const res = await conn.query("SELECT * FROM Ofertas ");
     const objetoOfertas = {
       ofertas: res.map((oferta) => ({
@@ -45,8 +46,9 @@ async function obtenerOfertas() {
   }
 }
 async function ofertaExiste(ofertaId) {
+  let conn;
   try {
-    let conn = await getConnection();
+    conn = await getConnection();
     const res = await conn.query("SELECT * FROM Ofertas WHERE ofertaId = ?", [
       ofertaId,
     ]);
