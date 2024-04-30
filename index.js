@@ -11,6 +11,9 @@ const grpcServer = require("./grpc/server");
 const colors = require("colors");
 
 app.use(express.json());
+app.get("/status", (req, res) => {
+  res.json({ Status: "OK" });
+});
 app.use("/api/clientes/", clientesRoutes);
 app.use("/api/mercados/", mercadosRoutes);
 app.use("/api/profeco/", profecoRoutes);
