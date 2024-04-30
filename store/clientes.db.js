@@ -22,15 +22,14 @@ async function getConnection() {
     }
   });
 }
-async function login(email, password) {
+async function getDataByEmail(email) {
   let conn;
 
   try {
     conn = await getConnection();
-    const res = await conn.query(
-      "SELECT * FROM Clientes WHERE email = ? AND password = ? ",
-      [email, password]
-    );
+    const res = await conn.query("SELECT * FROM Clientes WHERE email = ? ", [
+      email,
+    ]);
     return res;
   } catch (error) {
     console.log(error);
@@ -99,4 +98,9 @@ async function calificarMercado(
   }
 }
 
-module.exports = { register, login, reportarInconsistencia, calificarMercado };
+module.exports = {
+  register,
+  getDataByEmail,
+  reportarInconsistencia,
+  calificarMercado,
+};

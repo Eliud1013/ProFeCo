@@ -1,5 +1,5 @@
 const express = require("express");
-const https = require("https");
+
 const fs = require("fs");
 const app = express();
 const clientesRoutes = require("./routes/clientes.routes");
@@ -18,17 +18,7 @@ app.use("/api/auth/clientes/", clientesAuthRoutes);
 app.use("/api/auth/mercados/", mercadosAuthRoutes);
 grpcServer();
 
-const options = {
-  key: fs.readFileSync("./ssl/privatek.pem"),
-  cert: fs.readFileSync("./ssl/cert.pem"),
-  passphrase: "12345",
-};
-
-https
-  .createServer(options, app)
-  .listen(3000, console.log("[+] ".green + "Express server running"));
-
-// app.listen(
-//   3000,
-//   console.log("[+]".green + " Express server running: 127.0.0.1:3000")
-// );
+app.listen(
+  3000,
+  console.log("[+]".green + " Express server running: 127.0.0.1:3000")
+);

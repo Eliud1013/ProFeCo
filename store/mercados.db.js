@@ -23,14 +23,13 @@ async function getConnection() {
   });
 }
 
-async function login(email, password) {
+async function getDataByEmail(email) {
   let conn;
   try {
     conn = await getConnection();
-    const res = await conn.query(
-      "SELECT * FROM Mercados WHERE email = ? AND password = ? ",
-      [email, password]
-    );
+    const res = await conn.query("SELECT * FROM Mercados WHERE email = ? ", [
+      email,
+    ]);
     return res;
   } catch (error) {
     console.log("[X] Mercados_db: " + error);
@@ -137,7 +136,7 @@ async function obtenerRatings(mercadoId) {
 
 module.exports = {
   register,
-  login,
+  getDataByEmail,
   checkProductExists,
   publicarOferta,
   offerExists,

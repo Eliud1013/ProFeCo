@@ -10,6 +10,7 @@ router.post("/login", async (req, res) => {
   } else {
     const logged = await clientesAuthServices.login(email, password);
     if (logged) {
+      console.log("logged");
       const token = jwt.generateToken(logged);
       res.status(200).cookie("auth", token, { httpOnly: true }).json({
         logged: true,
@@ -31,6 +32,8 @@ router.post("/register", async (req, res) => {
   } else if (gender != "H" && gender != "M") {
     console.log(gender);
     res.status(400).send("El genero puede ser H o M.");
+  } else if (password.length > 128) {
+    res.status(400).send("La contrasena tiene un limite de 128 caracteres");
   } else {
     const registered = await clientesAuthServices.register(
       name,

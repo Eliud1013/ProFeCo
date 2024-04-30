@@ -10,21 +10,18 @@ router.post("/login", async (req, res) => {
     res.status(400).json({ logged: false, message: "Faltan campos" });
   } else {
     const logged = await mercadosAuthServices.login(email, password);
-    if ("errorMsj" in logged) {
-      res.status(logged.status).send(logged.errorMsj);
+
+    if (logged) {
+      const token = jwt.generateToken(logged);
+      res.status(200).cookie("auth", token, { httpOnly: true }).json({
+        logged: true,
+        token: token,
+      });
     } else {
-      if (logged) {
-        const token = jwt.generateToken(logged);
-        res.status(200).cookie("auth", token, { httpOnly: true }).json({
-          logged: true,
-          token: token,
-        });
-      } else {
-        res.status(200).json({
-          logged: false,
-          message: "Credenciales invalidas",
-        });
-      }
+      res.status(200).json({
+        logged: false,
+        message: "Credenciales invalidas",
+      });
     }
   }
 });

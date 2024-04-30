@@ -1,16 +1,20 @@
 const { v4: uuidv4 } = require("uuid");
+const bcrypt = require("bcrypt");
 const mercadosDB = require("../../store/mercados.db.js");
 
 async function login(email, password) {
   try {
-    const logged = await mercadosDB.login(email, password);
-
-    if (logged.length == 0) {
+    const data = await mercadosDB.getDataByEmail(email);
+    if (data.length == 0) {
       console.log("return false");
       return false;
     } else {
-      console.log("Return logged OBjet");
-      return logged;
+      const logged = bcrypt.compareSync(password, data[0].password);
+      if (logged) {
+        return data;
+      } else {
+        return false;
+      }
     }
   } catch (error) {
     console.log("[X] Mercados_auth_services: " + error);
@@ -21,12 +25,14 @@ async function login(email, password) {
 
 async function register(mercado, username, password, email) {
   const id = uuidv4().split("-")[0];
+  const salt = bcrypt.genSaltSync(10);
+  const password_hash = bcrypt.hashSync(password, salt);
   const mercadoId = `MERCADO_${id}`;
   const registered = await mercadosDB.register(
     mercadoId,
     mercado,
     username,
-    password,
+    password_hash,
     email
   );
   var message;
