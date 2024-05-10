@@ -13,4 +13,4 @@ ENV SECRET=958db6d9d22a47e980ba2c6228552edb
 
 EXPOSE 3000
 
-CMD ["npm","run","start"]
+CMD ["node","index_nossl.js"]
