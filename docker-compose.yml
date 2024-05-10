@@ -1,37 +1,42 @@
 version: "3"
 services:
   backend_1:
+    container_name: backend_1
     build:
       context: .
       dockerfile: /home/eliud1013/Proyectos-Escuela/ProFeCo/Dockerfile
-    ports:
-      - 3001:3000
     environment:
-      - DB_HOST=mariadb
+      - DB_HOST=backend_db
       - DB_USER=root
       - DB_PASSWORD=12345
       - DB=Profeco
       - SECRET=958db6d9d22a47e980ba2c6228552edb
   backend_2:
+    container_name: backend_2
     build:
       context: .
       dockerfile: /home/eliud1013/Proyectos-Escuela/ProFeCo/Dockerfile
-    ports:
-      - 3002:3000
     environment:
-      - DB_HOST=mariadb
+      - DB_HOST=backend_db
       - DB_USER=root
       - DB_PASSWORD=12345
       - DB=Profeco
       - SECRET=958db6d9d22a47e980ba2c6228552edb
   db:
+    container_name: backend_db
     image: mariadb:latest
-    container_name: mariadb
-    ports:
-      - 3306:3306
     environment:
       - MARIADB_ROOT_PASSWORD=12345
     volumes:
-      - db_data:/var/lib/mysql
+      - profeco_db_data:/var/lib/mysql
+  web_server:
+    container_name: profeco_nginx
+    image: nginx:latest
+    ports:
+      - 3000:80
+    volumes:
+      - /home/eliud1013/Proyectos-Escuela/ProFeCo/nginx.conf:/etc/nginx/nginx.conf
+
 volumes:
-  db_data:
+  profeco_db_data:
+    external: true
