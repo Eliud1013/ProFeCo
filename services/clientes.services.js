@@ -21,7 +21,7 @@ const client = new NewsService(
   "localhost:50051",
   grpc.credentials.createInsecure()
 );
-async function obtenerOfertas() {
+async function obtenerOfertas(idProducto, idMercado) {
   const ofertas = await new Promise((resolve, reject) => {
     client.obtenerOfertas({}, (error, response) => {
       if (error) {
@@ -90,11 +90,14 @@ async function calificarMercado(
     return { calificado: false, status: 500 };
   }
 }
-
+async function getMarkets() {
+  return await clientesDB.listarMercados();
+}
 //calificarMercado
 module.exports = {
   obtenerOfertas,
   reportarInconsistencia,
   ofertaExiste,
   calificarMercado,
+  getMarkets,
 };

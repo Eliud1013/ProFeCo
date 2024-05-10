@@ -12,7 +12,7 @@ module.exports = function (req, res, next) {
       if (data.roll == "profeco") {
         next();
       } else {
-        res.status(400).send("Necesitas una cuenta de cliente");
+        res.status(400).send("Necesitas una cuenta de Profeco");
       }
     } catch (error) {
       res.status(400).send("Invalid token format");

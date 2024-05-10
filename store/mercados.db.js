@@ -23,6 +23,24 @@ async function getConnection() {
   });
 }
 
+async function getFines(mercadoId) {
+  let conn;
+  try {
+    conn = await getConnection();
+    const res = await conn.query("SELECT * FROM Multas WHERE tiendaId = ? ", [
+      mercadoId,
+    ]);
+    return res;
+  } catch (error) {
+    console.log("[X] Mercados_db: " + error);
+  } finally {
+    if (conn) {
+      console.log("IF");
+      conn.release();
+    }
+  }
+}
+
 async function getDataByEmail(email) {
   let conn;
   try {
@@ -142,4 +160,5 @@ module.exports = {
   offerExists,
   marktetExists,
   obtenerRatings,
+  getFines,
 };

@@ -97,10 +97,37 @@ async function calificarMercado(
     if (conn) conn.release();
   }
 }
+async function listarMercados() {
+  let conn;
+  try {
+    conn = await getConnection();
+    const res = [];
+    const mercados = await conn.query(
+      "SELECT mercadoId, mercado FROM Mercados;",
+      []
+    );
+
+    for (const m of mercados) {
+      const calificacion = await conn.query(
+        "SELECT AVG(calificacion) FROM Calificaciones WHERE mercadoId = ?;",
+        [m.mercadoId]
+      );
+      m.calificacion = Object.values(calificacion[0])[0];
+      res.push(m);
+    }
+
+    return res;
+  } catch (error) {
+    return error;
+  } finally {
+    if (conn) conn.release();
+  }
+}
 
 module.exports = {
   register,
   getDataByEmail,
   reportarInconsistencia,
   calificarMercado,
+  listarMercados,
 };

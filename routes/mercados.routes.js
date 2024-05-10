@@ -6,8 +6,10 @@ const productExists = require("../middlewares/productExists");
 const offerExists = require("../middlewares/offerExists");
 const mercadosServices = require("../services/mercados.services");
 
-router.get("/multas", (req, res) => {
-  res.send("Multas");
+router.get("/multas", checkAuth, async (req, res) => {
+  const cookie = req.headers.cookie;
+  const multas = await mercadosServices.getFines(cookie);
+  res.json(multas);
 });
 
 router.post("/subirPrecio/:idProducto", (req, res) => {

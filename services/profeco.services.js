@@ -11,5 +11,15 @@ async function multarTienda(idTienda, multa, mensaje) {
     return { multado: false, mensaje: "La multa no ha sido aplicado" };
   }
 }
+async function obtenerInconsistencias() {
+  return await profecoDB.getReports();
+}
+async function obtenerInconsistenciasM(mercadoId) {
+  return await profecoDB.getMarketReports(mercadoId);
+}
 
-module.exports = { multarTienda };
+module.exports = {
+  multarTienda,
+  obtenerInconsistencias,
+  obtenerInconsistenciasM,
+};

@@ -1,5 +1,7 @@
+require("dotenv").config();
 const { v4: uuidv4 } = require("uuid");
 const mercadoDB = require("../store/mercados.db");
+const jwt = require("jsonwebtoken");
 
 async function publicarOferta(productId, mercadoId, precioOferta) {
   const id = uuidv4().split("-")[0];
@@ -21,9 +23,22 @@ async function publicarOferta(productId, mercadoId, precioOferta) {
     }
   }
 }
+
+async function getFines(cookie) {
+  try {
+    let token = cookie.split("=")[1];
+    let data = jwt.verify(token, process.env.SECRET);
+    const mercadoId = data.mercadoId;
+    const multas = await mercadoDB.getFines(mercadoId);
+
+    return multas;
+  } catch (error) {
+    res.status(400).send("Invalid token format");
+  }
+}
 async function obtenerRatings(mercadoId) {
   const ratings = await mercadoDB.obtenerRatings(mercadoId);
   return ratings;
 }
 
-module.exports = { publicarOferta, obtenerRatings };
+module.exports = { publicarOferta, obtenerRatings, getFines };

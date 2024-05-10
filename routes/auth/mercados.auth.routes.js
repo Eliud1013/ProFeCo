@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const mercadosAuthServices = require("../../services/auth/mercados.auth.services");
 const jwt = require("../../utils/jwt");
-const checkMercadosAuth = require("../../middlewares/checkMarketAuth");
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;

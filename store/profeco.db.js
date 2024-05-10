@@ -24,6 +24,58 @@ async function getConnection() {
   });
 }
 
+async function getDataByEmail(email) {
+  let conn;
+  try {
+    conn = await getConnection();
+    let res;
+
+    res = await conn.query("SELECT * FROM ProfecoUsuarios WHERE email = ?", [
+      email,
+    ]);
+
+    console.log(res);
+
+    return res;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    if (conn) conn.release();
+  }
+}
+
+async function getReports() {
+  let conn;
+  try {
+    conn = await getConnection();
+    let res;
+    res = await conn.query("SELECT * FROM Inconsistencias");
+
+    return res;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    if (conn) conn.release();
+  }
+}
+async function getMarketReports(mercadoId) {
+  let conn;
+  try {
+    conn = await getConnection();
+    let res;
+    res = await conn.query(
+      "select i.inconsistenciaId,i.ofertaId,i.clienteId,i.mensaje from Ofertas o JOIN Inconsistencias i ON o.ofertaId = i.ofertaId WHERE o.mercadoId= ? ",
+      [mercadoId]
+    );
+
+    return res;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    if (conn) conn.release();
+  }
+}
+
 /**CREATE TABLE Multas(
     multaId VARCHAR(52) PRIMARY KEY NOT NULL UNIQUE,
     tiendaId VARCHAR(52) NOT NULL,
@@ -55,4 +107,4 @@ async function multar(multaId, tiendaId, multa, mensaje) {
   }
 }
 
-module.exports = { multar };
+module.exports = { multar, getDataByEmail, getReports, getMarketReports };

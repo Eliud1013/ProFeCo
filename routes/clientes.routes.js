@@ -9,8 +9,11 @@ const clientesServices = require("../services/clientes.services");
 const { ofertaExiste } = require("../services/clientes.services");
 const checkAuth = require("../middlewares/checkClientAuth");
 
-router.get("/ofertas", async (req, res) => {
+router.get("/ofertas", checkAuth, async (req, res) => {
   //Obtener todas las ofertas
+  const idProducto = req.query.producto || "";
+  const idMercado = req.query.mercado || "";
+
   const ofertas = await clientesServices.obtenerOfertas();
 
   res.json(ofertas);
@@ -39,6 +42,9 @@ router.post(
   }
 );
 
+router.get("/mercados", async (req, res) => {
+  res.json(await clientesServices.getMarkets());
+});
 router.post(
   "/calificar/:mercadoId",
   checkAuth,

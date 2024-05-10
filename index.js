@@ -7,6 +7,7 @@ const mercadosRoutes = require("./routes/mercados.routes");
 const profecoRoutes = require("./routes/profeco.routes");
 const clientesAuthRoutes = require("./routes/auth/clientes.auth.routes");
 const mercadosAuthRoutes = require("./routes/auth/mercados.auth.routes");
+const profecoAuthRoutes = require("./routes/auth/profeco.auth.routes");
 const grpcServer = require("./grpc/server");
 const colors = require("colors");
 
@@ -19,6 +20,7 @@ app.use("/api/mercados/", mercadosRoutes);
 app.use("/api/profeco/", profecoRoutes);
 app.use("/api/auth/clientes/", clientesAuthRoutes);
 app.use("/api/auth/mercados/", mercadosAuthRoutes);
+app.use("/api/auth/profeco/", profecoAuthRoutes);
 grpcServer();
 
 const options = {
