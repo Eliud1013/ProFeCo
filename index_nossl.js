@@ -12,7 +12,8 @@ const colors = require("colors");
 
 app.use(express.json());
 app.get("/status", (req, res) => {
-  res.json({ Status: `[${process.env.backend_no}] OK` });
+  console.log(`[Backend ${process.env.backend_no}]:`.red + "OK".green);
+  res.json({ Status: ` OK` });
 });
 app.use("/api/clientes/", clientesRoutes);
 app.use("/api/mercados/", mercadosRoutes);
