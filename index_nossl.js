@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const clientesRoutes = require("./routes/clientes.routes");
@@ -11,7 +12,7 @@ const colors = require("colors");
 
 app.use(express.json());
 app.get("/status", (req, res) => {
-  res.json({ Status: "OK" });
+  res.json({ Status: `[${process.env.backend_no}] OK` });
 });
 app.use("/api/clientes/", clientesRoutes);
 app.use("/api/mercados/", mercadosRoutes);
