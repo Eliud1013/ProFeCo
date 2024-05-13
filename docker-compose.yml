@@ -11,6 +11,7 @@ services:
       - DB_PASSWORD=12345
       - DB=Profeco
       - SECRET=958db6d9d22a47e980ba2c6228552edb
+      - backend_no=1
   backend_2:
     container_name: backend_2
     build:
@@ -22,6 +23,7 @@ services:
       - DB_PASSWORD=12345
       - DB=Profeco
       - SECRET=958db6d9d22a47e980ba2c6228552edb
+      - backend_no=2
   db:
     container_name: backend_db
     image: mariadb:latest
